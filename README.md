@@ -101,16 +101,19 @@ helm repo add grafana https://grafana.github.io/helm-charts
 helm install my-grafana grafana/grafana --version 9.3.2
 📸 Screenshots
 Application Interface
-![Application](screenshots/app.png)
+![Application](screenshots/application.png)
 Application Homepage Main application interface showing the name generation functionality
 
 Kubernetes Dashboard
+![Application](screenshots/pods.png)
 Kubernetes Pods Kubernetes dashboard showing running pods and their status
 
 Grafana Monitoring
+![Application](screenshots/grafana.png)
 Grafana Dashboard Grafana dashboard displaying application and infrastructure metrics
 
 AWS EKS Cluster
+![Application](screenshots/cluster.png)
 EKS Cluster AWS EKS console showing cluster details and node groups
 
 🔧 Configuration

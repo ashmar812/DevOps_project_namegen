@@ -1,195 +1,129 @@
-DEVOPS FINAL PROJECT - TEAM 2
-📖 Overview
-A cloud-native name generation application demonstrating modern DevOps practices and container orchestration. This project showcases a complete CI/CD pipeline, infrastructure as code, and comprehensive monitoring using industry-standard tools and practices.
+# 🚀 DevOps Final Project - Team 2
 
-🏗️ Architecture
-System Architecture Diagram
-System Architecture Diagram
-![Diagram](screenshots/diagram.png)
-Application Flow
-Frontend: HTML/CSS/JavaScript served statically
-Backend: Node.js Express API with REST endpoints
-Database: MongoDB for persistent storage
-Load Balancer: AWS Network Load Balancer for traffic distribution
-Monitoring: Prometheus + Grafana for metrics and visualization
-🛠️ Technologies Used
-Core Application Stack
-Runtime: Node.js 18 LTS
-Framework: Express.js
-Database: MongoDB 3.6
-Data Generation: Faker.js
-Logging: Winston
-DevOps & Infrastructure
-Containerization: Docker with multi-stage builds
-Container Registry: AWS ECR (Elastic Container Registry)
-Orchestration: Kubernetes (AWS EKS)
-Cloud Provider: Amazon Web Services (AWS)
-Infrastructure as Code: eksctl for cluster provisioning
-Storage: AWS EBS (Elastic Block Store) with GP3 volumes
-Kubernetes Strategy
-Deployment Strategy: Rolling updates for zero-downtime deployments
-Application Pods: Deployment with 2 replicas for high availability
-Database: StatefulSet for MongoDB with persistent storage
-Service Mesh: Kubernetes-native service discovery
-Storage Class: Custom EBS-backed storage with encryption
-Load Balancing: AWS Network Load Balancer (NLB) with IP mode
-Monitoring & Observability
-Metrics Collection: Prometheus
-Visualization: Grafana dashboards
-Application Logging: Winston with structured logging
-Health Checks: Kubernetes liveness and readiness probes
-Security Features
-Container Security: Non-root user execution
-Storage Encryption: EBS volumes encrypted at rest
-Network Security: AWS VPC with proper subnet isolation
-RBAC: Kubernetes Role-Based Access Control
-🚀 How to Run - Step by Step
-Prerequisites
-AWS CLI configured with appropriate permissions
-kubectl installed and configured
-eksctl installed
-Docker installed (for local development)
-Step 1: Create EKS Cluster
-# Create the EKS cluster using the provided configuration
-eksctl create cluster -f clusters/team3_cluster.yaml
+## 🌐 Overview
 
-# Verify cluster creation
-kubectl get nodes
-Step 2: Configure kubectl Context
-# Update kubeconfig to use the new cluster
-aws eks update-kubeconfig --region us-west-2 --name team3-cluster
-Step 3: Deploy Storage Class
-# Apply the custom storage class for persistent volumes
-kubectl apply -f k8s_manifests/storage_svc.yaml
-Step 4: Deploy MongoDB Database
-# Deploy MongoDB StatefulSet and Service
-kubectl apply -f k8s_manifests/db_deployment.yaml
-kubectl apply -f k8s_manifests/db_srvc.yaml
-Step 5: Deploy Application
-# Deploy the application deployment and service
-kubectl apply -f k8s_manifests/app_deployment.yaml
-kubectl apply -f k8s_manifests/app_srvc.yaml
-Step 6: Verify Deployment
-# Check all pods are running
-kubectl get pods
+A **cloud-native Name Generation App** demonstrating modern DevOps practices—container orchestration, CI/CD pipelines, Infrastructure-as-Code (IaC), end-to-end monitoring, and automated scaling, all running on AWS.
 
-# Get service details and external IP
-kubectl get services
+---
 
-# Check deployment status
-kubectl get deployments
-kubectl get statefulsets
-Step 7: Access the Application
-# Get the LoadBalancer external IP
-kubectl get service namegen-team3-service
+## 🏗️ Architecture
 
-# The application will be available at:
-# http://<EXTERNAL-IP>/
-📊 Monitoring Setup
-Prometheus + Grafana Integration
-Deploy Prometheus
-# Add Prometheus Helm repository
+### 💡 System Architecture Diagram
+
+![Architecture Diagram](screenshots/diagram.png)
+
+### ⚙️ Application Flow
+
+| Component       | Tech             | Purpose                     |
+|-----------------|------------------|-----------------------------|
+| Frontend        | HTML/CSS/JS      | Static UI                   |
+| Backend         | Node.js/Express  | REST API                    |
+| Database        | MongoDB          | Persistent storage          |
+| Load Balancer   | AWS NLB          | Traffic routing             |
+| Monitoring      | Prometheus/Grafana| Metrics & Visualization    |
+
+---
+
+## 🛠️ Stack & Tools
+
+### 📦 Core Application
+
+- **Runtime:** Node.js 18 LTS
+- **Framework:** Express.js
+- **Database:** MongoDB 3.6 (StatefulSet)
+- **Mock Data:** Faker.js
+- **Logging:** Winston
+
+### 🛡️ DevOps & Cloud
+
+- **Containerization:** Docker (multi-stage)
+- **Container Registry:** AWS ECR
+- **Orchestration:** Kubernetes (AWS EKS)
+- **Infrastructure as Code:** eksctl
+- **Storage:** AWS EBS (encrypted)
+- **Load Balancing:** AWS NLB
+
+### 🔹 Kubernetes Strategy
+
+- Rolling updates (zero downtime)
+- 2+ app replicas for HA; StatefulSet for DB
+- Kubernetes-native service discovery
+- RBAC for access control
+- Non-root containers, VPC isolation, encrypted EBS volumes
+
+### 📈 Monitoring
+
+- **Metrics:** Prometheus
+- **Dashboards:** Grafana
+- **Logging:** Winston (structured)
+- **App Health:** Liveness/readiness probes
+
+---
+
+## 🚦 Prerequisites
+
+- [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) configured
+- [kubectl](https://kubernetes.io/docs/tasks/tools/) installed
+- [eksctl](https://docs.aws.amazon.com/eks/latest/userguide/eksctl.html) installed
+- [Docker](https://docs.docker.com/get-docker/) (for local testing)
+
+---
+
+## ⚡ Quick Start
+
+1. **Create EKS Cluster**
+    ```bash
+    eksctl create cluster -f clusters/team3_cluster.yaml
+    kubectl get nodes
+    ```
+
+2. **Configure kubectl**
+    ```bash
+    aws eks update-kubeconfig --region us-west-2 --name team3-cluster
+    ```
+
+3. **Setup Storage Class**
+    ```bash
+    kubectl apply -f k8s_manifests/storage_svc.yaml
+    ```
+
+4. **Deploy MongoDB**
+    ```bash
+    kubectl apply -f k8s_manifests/db_deployment.yaml
+    kubectl apply -f k8s_manifests/db_srvc.yaml
+    ```
+
+5. **Deploy Application**
+    ```bash
+    kubectl apply -f k8s_manifests/app_deployment.yaml
+    kubectl apply -f k8s_manifests/app_srvc.yaml
+    ```
+
+6. **Verify Everything**
+    ```bash
+    kubectl get pods
+    kubectl get services
+    kubectl get deployments
+    kubectl get statefulsets
+    ```
+
+7. **Access the Application**
+    ```bash
+    kubectl get service namegen-team3-service
+    # Visit http://<EXTERNAL-IP>/
+    ```
+
+---
+
+## 📊 Monitoring & Observability
+
+#### Install Prometheus & Grafana with Helm
+
+```bash
+# Add Prometheus Helm repo and install
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-
-# Install Prometheus
 helm install my-prometheus prometheus-community/prometheus --version 27.30.0
-Deploy Grafana
-# Add Grafana Helm repository
+
+# Add Grafana Helm repo and install
 helm repo add grafana https://grafana.github.io/helm-charts
-
-# Install Grafana
 helm install my-grafana grafana/grafana --version 9.3.2
-📸 Screenshots
-Application Interface
-![Application](screenshots/application.png)
-Application Homepage Main application interface showing the name generation functionality
-
-Kubernetes Dashboard
-![Application](screenshots/pods.png)
-Kubernetes Pods Kubernetes dashboard showing running pods and their status
-
-Grafana Monitoring
-![Application](screenshots/grafana.png)
-Grafana Dashboard Grafana dashboard displaying application and infrastructure metrics
-
-AWS EKS Cluster
-![Application](screenshots/cluster.png)
-EKS Cluster AWS EKS console showing cluster details and node groups
-
-🔧 Configuration
-Environment Variables
-Variable	Description	Default
-MONGODB_URL	MongoDB connection string	mongodb://mongo-team3:27017/namegen
-PORT	Application port	8080
-NODE_ENV	Environment mode	production
-Kubernetes Resources
-Resource	Replicas	CPU Request	Memory Request
-NameGen App	2	100m	128Mi
-MongoDB	1	200m	256Mi
-🚨 Troubleshooting
-Common Issues
-Pods Not Starting
-# Check pod status and events
-kubectl describe pod <pod-name>
-kubectl get events --sort-by=.metadata.creationTimestamp
-Database Connection Issues
-# Check MongoDB service
-kubectl get service mongo-team3
-kubectl logs -l app=mongo-team3
-LoadBalancer Not Accessible
-# Check service status
-kubectl get service namegen-team3-service
-kubectl describe service namegen-team3-service
-🧹 Cleanup & Resource Management
-Deleting the EKS Cluster
-When you're done with the project and want to clean up all AWS resources to avoid charges:
-
-Option 1: Delete using eksctl (Recommended)
-# Delete the entire cluster and all associated resources
-eksctl delete cluster --name team3-cluster --region us-west-2
-
-# This will automatically delete:
-# - EKS cluster
-# - Node groups
-# - VPC and subnets (if created by eksctl)
-# - Security groups
-# - Load balancers
-# - EBS volumes
-Option 2: Delete Kubernetes resources first, then cluster
-# Step 1: Delete all deployed applications
-kubectl delete -f k8s_manifests/
-
-# Step 2: Delete any persistent volumes
-kubectl delete pv --all
-
-# Step 3: Delete the cluster
-eksctl delete cluster --name team3-cluster --region us-west-2
-Option 3: Manual cleanup (if eksctl delete fails)
-# Delete cluster from AWS console or CLI
-aws eks delete-cluster --name team3-cluster --region us-west-2
-
-# Clean up node groups
-aws eks delete-nodegroup --cluster-name team3-cluster --nodegroup-name <nodegroup-name> --region us-west-2
-
-# Clean up VPC and other resources if they were created specifically for this cluster
-Verify Cleanup
-# Check that cluster is deleted
-eksctl get cluster --region us-west-2
-
-# Check AWS console for any remaining resources:
-# - EC2 instances
-# - Load balancers
-# - EBS volumes
-# - VPC components
-Cost Optimization Tips
-Delete the cluster when not in use to avoid ongoing charges
-Monitor AWS billing dashboard for unexpected costs
-Use kubectl get pv to check for orphaned persistent volumes
-Review CloudFormation stacks for any remaining eksctl resources
-📝 Additional Notes
-Important Considerations
-Deleting the cluster will permanently remove all data stored in the MongoDB persistent volumes
-Make sure to backup any important data before deletion
-The deletion process may take 10-15 minutes to complete
-Some AWS resources may have a small delay before being fully cleaned up
-This project demonstrates enterprise-grade DevOps practices including containerization, orchestration, monitoring, and cloud-native deployment strategies.
